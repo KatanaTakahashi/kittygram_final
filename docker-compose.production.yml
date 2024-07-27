@@ -11,21 +11,24 @@ services:
     env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data
+
   backend:
     image: katanatakahashi/kittygram_backend
     env_file: .env
     volumes:
       - static:/static
       - media:/media
+
   frontend:
     image: katanatakahashi/kittygram_frontend
     command: cp -r /app/build/. /static/
     volumes:
       - static:/static
+
   gateway:
     image: katanatakahashi/kittygram_gateway
     ports:
       - 9000:80
     volumes:
       - static:/static
-      - media:/media
+      - media:/media:ro
